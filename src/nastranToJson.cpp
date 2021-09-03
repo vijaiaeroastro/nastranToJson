@@ -137,7 +137,7 @@ void nastranToJson::convertNastranToJson() {
         nlohmann::json vertexCollection = nlohmann::json::array();
         for (auto iter: cleaned_up_vertex_data) {
             nlohmann::json currentJVertex = nlohmann::json::object();
-            currentJVertex["id"] = iter.first;
+            currentJVertex["id"] = iter.first - 1;
             currentJVertex["x"] = iter.second[0];
             currentJVertex["y"] = iter.second[1];
             currentJVertex["z"] = iter.second[2];
@@ -166,10 +166,10 @@ void nastranToJson::convertNastranToJson() {
             }
             if( cleaned_up_triangles.size() == 5)  {
                 nlohmann::json currentJTriangle = nlohmann::json::object();
-                currentJTriangle["id"] = boost::lexical_cast<unsigned int>(cleaned_up_triangles.at(0));
-                currentJTriangle["v1"] = boost::lexical_cast<unsigned int>(cleaned_up_triangles.at(2));
-                currentJTriangle["v2"] = boost::lexical_cast<unsigned int>(cleaned_up_triangles.at(3));
-                currentJTriangle["v3"] = boost::lexical_cast<unsigned int>(cleaned_up_triangles.at(4));
+                currentJTriangle["id"] = boost::lexical_cast<unsigned int>(cleaned_up_triangles.at(0)) - 1;
+                currentJTriangle["v1"] = boost::lexical_cast<unsigned int>(cleaned_up_triangles.at(2)) - 1;
+                currentJTriangle["v2"] = boost::lexical_cast<unsigned int>(cleaned_up_triangles.at(3)) - 1;
+                currentJTriangle["v3"] = boost::lexical_cast<unsigned int>(cleaned_up_triangles.at(4)) - 1;
                 triangleCollection.push_back(currentJTriangle);
             }
         }
@@ -207,10 +207,10 @@ void nastranToJson::convertNastranToJson() {
         nlohmann::json featureCurveCollection = nlohmann::json::array();
         for (auto iter: feature_curve_map) {
             nlohmann::json currentJCurve = nlohmann::json::object();
-            currentJCurve["id"] = iter.first;
+            currentJCurve["id"] = iter.first - 1;
             nlohmann::json featJIds = nlohmann::json::array();
             for (auto fIter: iter.second) {
-                featJIds.push_back(fIter);
+                featJIds.push_back(fIter - 1);
             }
             currentJCurve["chain"] = featJIds;
             featureCurveCollection.push_back(currentJCurve);
