@@ -7,4 +7,7 @@ find_package(Boost 1.65 REQUIRED)
 
 include_directories(include)
 
-add_executable(nastranToJson main.cpp nastranToJson.cpp pystring.cpp)
+set(SRCS src/pystring.cpp
+        src/nastranToJson.cpp)
+
+add_executable(nastranToJson main.cpp ${SRCS})
