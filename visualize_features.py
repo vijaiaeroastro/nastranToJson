@@ -26,18 +26,26 @@ def featuresFromJson(f_obj):
             feature_colour.append(unique_colours[f["id"]])
     return np.array(feature_array), np.array(feature_colour)
 
+def trianglesFromJson(f_obj):
+    fArr = np.empty([len(f_obj), 3], dtype=np.int64)
+    for f in f_obj:
+        fArr[f["id"], 0] = f["v1"]
+        fArr[f["id"], 1] = f["v2"]
+        fArr[f["id"], 2] = f["v3"]
+    return fArr
+
 def jsonToNumpy(input_file):
     f = open(input_file)
     data = json.load(f)
-    vertex_data = data["vertices"]
-    vertices = vertexFromJson(vertex_data)
-    feature_data = data["feature_curves"]
-    edges, colours = featuresFromJson(feature_data)
-    return vertices, edges, colours
+    vertices = vertexFromJson(data["vertices"])
+    edges, colours = featuresFromJson(data["feature_curves"])
+    triangles = trianglesFromJson(data["triangles"])
+    return vertices, triangles, edges, colours
 
 if __name__ == "__main__":
     ps.init()
-    v, e, c = jsonToNumpy("/home/vijai.kumar/Code/nastranToJson/cmake-build-release/bracket.fjson")
+    v, t, e, c = jsonToNumpy("/home/vijai.kumar/Code/nastranToJson/cmake-build-release/rotor_shaft.fjson")
+    os_mesh = ps.register_surface_mesh("mesh", v, t)
     ps_net = ps.register_curve_network("Feature Curve", v, e)
     ps_net.add_color_quantity("f_id", c, defined_on='edges')
     ps.show()
