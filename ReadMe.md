@@ -16,4 +16,9 @@ It can be used to visualize the feature lines in [Polyscope](https://polyscope.r
 
 ![polyscope](polyscope.png)
 
+or the surface mesh or both
+
+![polyscope](surface_mesh.png)
+
+
 It also adds an unique random colour automatically to every feature group indicated as `BLSEG`
