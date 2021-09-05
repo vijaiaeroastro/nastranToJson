@@ -73,7 +73,7 @@ def jsonToNumpy(input_file):
 
 if __name__ == "__main__":
     ps.init()
-    v, t, e, c = jsonToNumpy("/home/vijai.kumar/Code/nastranToJson/cmake-build-release/binary_test.fjson")
+    v, t, e, c = jsonToNumpy("data/binary_test.fjson")
     os_mesh = ps.register_surface_mesh("mesh", v, t)
     ps_net = ps.register_curve_network("Feature Curve", v, e)
     ps_net.add_color_quantity("f_id", c, defined_on='edges')
